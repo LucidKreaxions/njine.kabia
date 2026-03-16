@@ -16,7 +16,7 @@ class RoomBooking(models.Model):
         on_delete=models.CASCADE
     )
 
-    check_in = models.DateField()
+    check_in = models.DateField() # room availability algorithm
     check_out = models.DateField()
 
     created_at = models.DateTimeField(auto_now_add=True)

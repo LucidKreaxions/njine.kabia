@@ -12,11 +12,15 @@ class Activity(models.Model):
         decimal_places=2
     )
 
-    duration = models.IntegerField()
+    duration = models.IntegerField(
+            help_text="Duration in minutes"
+            )
 
     capacity = models.IntegerField()
 
     image = models.ImageField(upload_to="activities/")
+
+    available = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
