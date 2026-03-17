@@ -1,12 +1,13 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from .views import RoomListView, RoomDetailView
+
 
 urlpatterns = [
 
-    path("admin/", admin.site.urls),
+    # List all rooms + availability search
+    path("", RoomListView.as_view(), name="room-list"),
 
-    path("api/auth/", include("apps.users.urls")),
-
-    path("api/rooms/", include("apps.rooms.urls")),
+    # Get single room (with optional availability check)
+    path("<int:pk>/", RoomDetailView.as_view(), name="room-detail"),
 
 ]

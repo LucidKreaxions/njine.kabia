@@ -1,11 +1,10 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework import status
-from django.db import transaction
-
-from apps.rooms.models import Room
-from .models import RoomBooking
-from .serializers import RoomBookingSerializer
+from rest_framework.exceptions import ValidationError
+from datetime import date
+from .models import Room
+from .serializers import RoomSerializer
+from apps.bookings.models import RoomBooking
 
 # Create your views here.
 # List all rooms
@@ -20,7 +19,17 @@ class RoomListView(generics.ListAPIView): # availability search engine
         check_in = self.request.query_params.get("check_in")
         check_out = self.request.query_params.get("check_out")
 
+        # ✅ PRO LEVEL VALIDATION
         if check_in and check_out:
+
+            check_in = date.fromisoformat(check_in)
+            check_out = date.fromisoformat(check_out)
+
+            if check_in >= check_out:
+                raise ValidationError("check_out must be after check_in")
+
+            if check_in < date.today():
+                raise ValidationError("Cannot book past dates")
 
             booked_rooms = RoomBooking.objects.filter(
                 check_in__lt=check_out,
@@ -49,6 +58,16 @@ class RoomDetailView(generics.RetrieveAPIView):
         data = serializer.data
 
         if check_in and check_out:
+
+            check_in = date.fromisoformat(check_in)
+            check_out = date.fromisoformat(check_out)
+
+            # ✅ PRO VALIDATION
+            if check_in >= check_out:
+                raise ValidationError("check_out must be after check_in")
+
+            if check_in < date.today():
+                raise ValidationError("Cannot book past dates")
 
             conflict = RoomBooking.objects.filter(
                 room=room,

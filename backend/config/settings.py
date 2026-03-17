@@ -65,10 +65,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
 
-    "DEFAULT_PAGINATION_CLASS":
-        "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "core.pagination.CustomPagination",
 
-    "PAGE_SIZE": 10
+    "PAGE_SIZE": 10,
 }
 
 MIDDLEWARE = [

@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 import uuid
 
 from .models import Payment
@@ -32,3 +30,16 @@ class PaymentDetailView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         return Payment.objects.filter(user=self.request.user)
+
+
+class PaymentDetailView(generics.RetrieveAPIView):
+
+    serializer_class = PaymentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Payment.objects.filter(user=self.request.user)
+
+class PaymentListView(generics.ListAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
