@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'apps.bookings',
     'apps.orders',
     'apps.payments',
+
+    "debug_toolbar",
 ]
 
 AUTH_USER_MODEL = "users.User"
@@ -78,7 +80,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware", # Django debug tool
 ]
+
+
+INTERNAL_IPS = [ # Django debug tool
+        "127.0.0.1",
+]
+
+# Django debug tool
+LOGGING = {
+    "version": 1,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}
 
 ROOT_URLCONF = 'config.urls'
 
