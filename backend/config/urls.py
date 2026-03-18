@@ -19,9 +19,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from django.http import HttpResponse  # api endpoint __debug__/
 
 def home(request):
     return JsonResponse({"message": "API is running"})
+
+def test_view(request):
+    return HttpResponse("Debug test page")
 
 
 urlpatterns = [
@@ -40,4 +44,7 @@ urlpatterns = [
 
     # Django debug tool
     path("__debug__/", include(debug_toolbar.urls)),
+
+    # http://127.0.0.1:8000/test/
+    path("test/", test_view),
 ]
