@@ -3,5 +3,5 @@ from .views import FoodListView
 
 
 urlpatterns = [
-    path("menu/", FoodListView.as_view()),
+    path("", FoodListView.as_view(), name="menu-list"),
 ]

@@ -4,6 +4,6 @@ from .views import RoomBookingCreateView
 
 urlpatterns = [
 
-    path("rooms/", RoomBookingCreateView.as_view(), name="room-booking"),
+    path("", RoomBookingCreateView.as_view(), name="room-booking"),
 
 ]
