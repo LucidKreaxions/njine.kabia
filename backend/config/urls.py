@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
@@ -34,5 +36,8 @@ urlpatterns = [
     path("api/activities/", include("apps.activities.urls")),
     path("api/bookings/", include("apps.bookings.urls")),
     path("api/orders/", include("apps.orders.urls")),
-    path("api/payments/", include("apps.payments.urls"))
+    path("api/payments/", include("apps.payments.urls")),
+
+    # Django debug tool
+    path("__debug__/", include(debug_toolbar.urls)),
 ]
